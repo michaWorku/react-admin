@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import './Sidebar.scss'
+import './sidebar.scss'
 
 const Sidebar : FC = () => {
   return (

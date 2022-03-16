@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import './Login.scss'
+import './login.scss'
 
 const Login : FC = () => {
   return (

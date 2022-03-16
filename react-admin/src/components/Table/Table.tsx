@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import './Table.scss'
+import './table.scss'
 
 const Table : FC = () => {
   return (

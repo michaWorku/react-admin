@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import './New.scss'
+import './new.scss'
 
 const New : FC = () => {
   return (

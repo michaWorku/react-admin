@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import './Widget.scss'
+import './widget.scss'
 
 const Widget : FC = () => {
   return (

@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import './List.scss'
+import './list.scss'
 
 const List : FC = () => {
   return (

@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import './Navbar.scss'
+import './navbar.scss'
 
 const Navbar : FC = () => {
   return (

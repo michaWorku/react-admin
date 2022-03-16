@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import './Featured.scss'
+import './featured.scss'
 
 const Featured : FC = () => {
   return (

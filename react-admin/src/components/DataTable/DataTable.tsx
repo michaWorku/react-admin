@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import './DataTable.scss'
+import './dataTable.scss'
 
 const DataTable : FC = () => {
   return (
