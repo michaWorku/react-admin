@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Navbar, Sidebar, Widget } from '../../components'
+import { Chart, Featured, Navbar, Sidebar, Widget } from '../../components'
 import './home.scss'
 
 const Home : FC = () => {
@@ -13,6 +13,10 @@ const Home : FC = () => {
           <Widget widgetType='order'/>
           <Widget widgetType='earning'/>
           <Widget widgetType='balance'/>
+        </div>
+        <div className="charts">
+          <Featured/>
+          <Chart/>
         </div>
       </div>
     </div>
