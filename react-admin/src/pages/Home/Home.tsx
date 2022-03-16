@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Navbar, Sidebar } from '../../components'
+import { Navbar, Sidebar, Widget } from '../../components'
 import './home.scss'
 
 const Home : FC = () => {
@@ -8,7 +8,12 @@ const Home : FC = () => {
       <Sidebar/>
       <div className="homeContainer">
         <Navbar />
-        home container
+        <div className="widgets">
+          <Widget widgetType='user'/>
+          <Widget widgetType='order'/>
+          <Widget widgetType='earning'/>
+          <Widget widgetType='balance'/>
+        </div>
       </div>
     </div>
   )
