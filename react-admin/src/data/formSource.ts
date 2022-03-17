@@ -1,4 +1,12 @@
-export const userInputs = [
+
+export interface inputType{
+  id : number,
+  label: String,
+  type: string,
+  placeholder?: string
+}
+
+export const userInputs : inputType[] = [
     {
       id: 1,
       label: "Username",
