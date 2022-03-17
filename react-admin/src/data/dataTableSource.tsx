@@ -8,10 +8,10 @@ export const userColumns : GridColDef[] = [
     width: 230,
     renderCell :(params : GridRenderCellParams)  =>{
       return (
-        // <div className="cellWithImg">
-        //   <img className="cellImg" src={params.row.img} alt="avatar" />
-          `${params.row.username}`
-      //  </div>
+        <div className="cellWithImg">
+           <img className="cellImg" src={params.row.img} alt="avatar" />
+          {params.row.username}
+        </div>
       )
     },
   },
@@ -32,9 +32,9 @@ export const userColumns : GridColDef[] = [
     width: 160,
     renderCell :(params : GridRenderCellParams)  =>{
       return (
-        //<div className={`cellWithStatus ${params.row.status}`}>
-          `${params.row.status}`
-        //</div>
+        <div className={`cellWithStatus ${params.row.status}`}>
+          {params.row.status}
+        </div>
       )
     },
       
