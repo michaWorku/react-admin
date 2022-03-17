@@ -7,23 +7,29 @@ import FullscreenExitOutlinedIcon from "@mui/icons-material/FullscreenExitOutlin
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
+import { useGlobalContext } from '../../context/darkModeContext';
 
 
 const Navbar : FC = () => {
+  const {dispatch} = useGlobalContext()
+
   return (
-    <div className='navbar'>
+    <div className="navbar">
       <div className="wrapper">
         <div className="search">
-          <input type="text" placeholder='Search...' />
-          <SearchOutlinedIcon/>
+          <input type="text" placeholder="Search..." />
+          <SearchOutlinedIcon />
         </div>
         <div className="items">
           <div className="item">
             <LanguageOutlinedIcon className="icon" />
-              English
+            English
           </div>
           <div className="item">
-          <DarkModeOutlinedIcon className="icon" />
+            <DarkModeOutlinedIcon
+              className="icon"
+              onClick={() => dispatch({ type: "TOGGLE" })}
+            />
           </div>
           <div className="item">
             <FullscreenExitOutlinedIcon className="icon" />
@@ -40,12 +46,16 @@ const Navbar : FC = () => {
             <ListOutlinedIcon className="icon" />
           </div>
           <div className="item">
-            <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YWRtaW58ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="profile image" className="avatar" />
+            <img
+              src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YWRtaW58ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+              alt="profile image"
+              className="avatar"
+            />
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default Navbar
