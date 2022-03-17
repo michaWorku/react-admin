@@ -12,9 +12,7 @@ interface newProps{
 
 const New : FC<newProps> = ({ inputs, title }) => {
 
-  const [file, setFile] = useState<string | Blob>("");
-
-  //const blobString : string = URL.createObjectURL(file as Blob)
+  const [file, setFile] = useState<any>();
 
   return (
     <div className="new">
@@ -29,7 +27,7 @@ const New : FC<newProps> = ({ inputs, title }) => {
             <img
               src={
                 file
-                  ? "blobString"
+                  ? URL.createObjectURL(file)
                   : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
               }
               alt=""
@@ -44,8 +42,10 @@ const New : FC<newProps> = ({ inputs, title }) => {
                 <input
                   type="file"
                   id="file"
-                  onChange={(e:React.FormEvent<HTMLInputElement>) => {
-                    //setFile(e.target.files[0])
+                  onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                    const image = (e.target as HTMLInputElement).files;
+                    //console.log(image && image[0])
+                    setFile(image && image[0]);
                   }}
                   style={{ display: "none" }}
                 />
@@ -63,7 +63,7 @@ const New : FC<newProps> = ({ inputs, title }) => {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default New
