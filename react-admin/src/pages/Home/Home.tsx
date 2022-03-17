@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Chart, Featured, Navbar, Sidebar, Widget } from '../../components'
+import { Chart, Featured, Navbar, Sidebar, Table, Widget } from '../../components'
 import './home.scss'
 
 const Home : FC = () => {
@@ -17,6 +17,10 @@ const Home : FC = () => {
         <div className="charts">
           <Featured/>
           <Chart title="Last 6 Months (Revenue)" aspect={2 / 1} />
+        </div>
+        <div className="listContainer">
+          <div className="listTitle">Latest Transactions</div>
+          <Table/>
         </div>
       </div>
     </div>
