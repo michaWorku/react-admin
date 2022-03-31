@@ -1,5 +1,14 @@
-import { InputUnstyledTypeMap } from '@mui/base'
-import { FC, useState } from 'react'
+import { FC, useState, useEffect } from 'react'
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
+import { auth, db } from "../../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { Navbar, Sidebar } from '../../components'
 import { inputType } from '../../data/formSource';
 import './new.scss'
@@ -10,9 +19,52 @@ interface newProps{
   title: string;
 }
 
-const New : FC<newProps> = ({ inputs, title }) => {
+interface data{
+  username: string,
+  displayName: string;
+  email: string;
+  phone: string;
+  password: string;
+  address: string;
+  country: string;
+}
 
+const New : FC<newProps> = ({ inputs, title }) => {
+  const [data, setData] = useState<data>(
+      {
+        username: "",
+        displayName: "",
+        email: "",
+        phone: "",
+        password: "",
+        address: "",
+        country: "",
+      });
   const [file, setFile] = useState<any>();
+
+  const handleInput = (e : React.ChangeEvent<HTMLInputElement>) => {
+    const id = e.target.id;
+    const value = e.target.value;
+
+    setData({ ...data, [id]: value });
+  };
+
+  const handleAdd = async (e:React.SyntheticEvent) => {
+    e.preventDefault();
+    try {
+     const res = await createUserWithEmailAndPassword(auth, data.email, data.password)
+     await setDoc(doc(db, "users", res.user.uid), {
+      ...data,
+      timeStamp: serverTimestamp(),
+    });
+
+    } catch (error) {
+      console.error(error);
+      
+    }
+  };
+
+
 
   return (
     <div className="new">
@@ -34,7 +86,7 @@ const New : FC<newProps> = ({ inputs, title }) => {
             />
           </div>
           <div className="right">
-            <form>
+            <form onSubmit={handleAdd}>
               <div className="formInput">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
@@ -54,7 +106,12 @@ const New : FC<newProps> = ({ inputs, title }) => {
               {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>
-                  <input type={input.type} placeholder={input.placeholder} />
+                  <input  
+                    id={input.id} 
+                    type={input.type} 
+                    placeholder={input.placeholder} 
+                    onChange={handleInput}
+                  />
                 </div>
               ))}
               <button>Send</button>
