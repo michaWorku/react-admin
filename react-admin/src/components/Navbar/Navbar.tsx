@@ -7,11 +7,11 @@ import FullscreenExitOutlinedIcon from "@mui/icons-material/FullscreenExitOutlin
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
-import { useGlobalContext } from '../../context/darkModeContext';
+import { useDarkModeContext } from '../../context/darkMode/darkModeContext';
 
 
 const Navbar : FC = () => {
-  const {dispatch} = useGlobalContext()
+  const {dispatch} = useDarkModeContext()
 
   return (
     <div className="navbar">

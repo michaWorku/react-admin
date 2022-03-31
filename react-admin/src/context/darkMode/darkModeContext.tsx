@@ -21,4 +21,4 @@ export const DarkModeContextProvider : FC = ({children})=>{
       </DarkModeContext.Provider>)
 }
 
-export const useGlobalContext = () => useContext(DarkModeContext) 
+export const useDarkModeContext = () => useContext(DarkModeContext) 

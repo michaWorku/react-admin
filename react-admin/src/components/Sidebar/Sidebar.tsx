@@ -14,12 +14,12 @@ import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSyst
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from 'react-router-dom';
-import { useGlobalContext } from '../../context/darkModeContext';
+import { useDarkModeContext } from '../../context/darkMode/darkModeContext';
 
 
 const Sidebar : FC = () => {
 
-  const {dispatch} = useGlobalContext()
+  const {dispatch} = useDarkModeContext()
 
   return (
     <div className="sidebar">
