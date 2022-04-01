@@ -52,7 +52,7 @@ const New : FC<newProps> = ({ inputs, title }) => {
   useEffect(() => {
     const uploadFile = () => {
       const name = new Date().getTime() + file.name;
-      const storageRef = ref(storage, file.name);
+      const storageRef = ref(storage, name);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
       uploadTask.on(
