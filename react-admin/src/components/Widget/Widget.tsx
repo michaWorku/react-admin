@@ -1,22 +1,22 @@
-import { FC } from 'react'
+import { FC, useState, useEffect} from 'react'
 import './widget.scss'
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from '../../firebase';
 
 interface widgetProps {
   widgetType: string
 }
 
 const Widget : FC<widgetProps> = ({widgetType}) => {
-
-  let data;
-
-  //temporary
-  const amount = 100;
-  const diff = 20;
+  const [amount, setAmount] = useState(0);
+  const [diff, setDiff] = useState(0);
+  let data : any;
 
   switch (widgetType) {
     case "user":
@@ -24,6 +24,7 @@ const Widget : FC<widgetProps> = ({widgetType}) => {
         title: "USERS",
         isMoney: false,
         link: "See all users",
+        query:"users",
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -39,6 +40,7 @@ const Widget : FC<widgetProps> = ({widgetType}) => {
       data = {
         title: "ORDERS",
         isMoney: false,
+        query: 'products',
         link: "View all orders",
         icon: (
           <ShoppingCartOutlinedIcon
@@ -55,6 +57,7 @@ const Widget : FC<widgetProps> = ({widgetType}) => {
       data = {
         title: "EARNINGS",
         isMoney: true,
+        query: 'users',
         link: "View net earnings",
         icon: (
           <MonetizationOnOutlinedIcon
@@ -64,10 +67,10 @@ const Widget : FC<widgetProps> = ({widgetType}) => {
         ),
       };
       break;
-    case "balance":
+    case "product":
       data = {
-        title: "BALANCE",
-        isMoney: true,
+        title: "PRODUCTS",
+        query:"products",
         link: "See details",
         icon: (
           <AccountBalanceWalletOutlinedIcon
@@ -84,6 +87,39 @@ const Widget : FC<widgetProps> = ({widgetType}) => {
       break;
   }
 
+  useEffect(()=>{
+    const fetchData = async()=>{
+      const today = new Date()
+      const lastMonth = new Date(new Date().setMonth(today.getMonth() - 1));
+      const prevMonth = new Date(new Date().setMonth(today.getMonth() - 2));
+      
+      const lastMonthQuery = query(
+        collection(db, data.query), 
+        where('timeStamp', '<=', today),
+        where('timeStamp', '>', lastMonth)
+        )
+
+      const prevMonthQuery = query(
+        collection(db, data.query), 
+        where('timeStamp', '<=', lastMonth),
+        where('timeStamp', '>', prevMonth)
+        )
+      
+      const lastMonthData = await getDocs(lastMonthQuery)
+      const prevMonthData = await getDocs(prevMonthQuery)
+
+      setAmount(lastMonthData.docs.length)
+      setDiff(
+        ((lastMonthData.docs.length - prevMonthData.docs.length) / prevMonthData.docs.length) *
+          100
+      );
+    }
+    
+    fetchData()
+  },[])
+
+  console.log({diff})
+
   return (
     <div className='widget'>
       <div className="left">
@@ -94,8 +130,11 @@ const Widget : FC<widgetProps> = ({widgetType}) => {
         <div className="link">{data?.link}</div>
       </div>
       <div className="right">
-        <div className="percentage positive">
-        <KeyboardArrowUpIcon /> {diff} %
+        <div className={`percentage ${diff > 0 ? 'positive' : 'negative'}`}>
+          {
+            diff > 0 ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />
+          }
+          {diff} %
         </div>
         {data?.icon}
       </div>

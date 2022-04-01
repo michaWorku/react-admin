@@ -12,7 +12,7 @@ const Home : FC = () => {
           <Widget widgetType='user'/>
           <Widget widgetType='order'/>
           <Widget widgetType='earning'/>
-          <Widget widgetType='balance'/>
+          <Widget widgetType='product'/>
         </div>
         <div className="charts">
           <Featured/>
