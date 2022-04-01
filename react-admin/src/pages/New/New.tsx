@@ -13,6 +13,7 @@ import { Navbar, Sidebar } from '../../components'
 import { inputType } from '../../data/formSource';
 import './new.scss'
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
+import { useNavigate } from 'react-router-dom';
 
 interface newProps{
   inputs: inputType[],
@@ -28,6 +29,7 @@ interface data{
   address: string;
   country: string;
   img: string;
+  status: string;
 }
 
 const New : FC<newProps> = ({ inputs, title }) => {
@@ -40,16 +42,16 @@ const New : FC<newProps> = ({ inputs, title }) => {
         password: "",
         address: "",
         country: "",
-        img: ''
+        img: '',
+        status: ''
       });
   const [file, setFile] = useState<any>();
   const [per, setPerc] = useState<number>(0);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const uploadFile = () => {
       const name = new Date().getTime() + file.name;
-
-      console.log(name);
       const storageRef = ref(storage, file.name);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -76,15 +78,13 @@ const New : FC<newProps> = ({ inputs, title }) => {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setData((prev) => ({ ...prev, img: downloadURL }));
+            setData({ ...data, img: downloadURL, status: "active" });
           });
         }
       );
     };
     file && uploadFile();
   }, [file]);
-
-  console.log(data);
 
   const handleInput = (e : React.ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
@@ -101,7 +101,7 @@ const New : FC<newProps> = ({ inputs, title }) => {
       ...data,
       timeStamp: serverTimestamp(),
     });
-
+    navigate(-1)
     } catch (error) {
       console.error(error);
       
@@ -158,7 +158,7 @@ const New : FC<newProps> = ({ inputs, title }) => {
                   />
                 </div>
               ))}
-              <button disabled={per !== null && per < 100} type="submit">Send</button>
+              <button disabled={per !== 0 && per < 100} type="submit">Send</button>
             </form>
           </div>
         </div>
